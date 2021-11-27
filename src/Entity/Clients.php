@@ -29,7 +29,7 @@ class Clients
      *
      * @Assert\Length(min = 8)
      * @Assert\Regex("/^[a-zA-Z0-9]+$/")
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      * 
      */
     private $password;
