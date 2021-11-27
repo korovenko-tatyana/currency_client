@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\ClientsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ClientsRepository::class)
+ * @UniqueEntity("login")
  */
 class Clients
 {
@@ -18,12 +21,16 @@ class Clients
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $login;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\Length(min = 8)
+     * @Assert\Regex("/^[a-zA-Z0-9]+$/")
+     * @ORM\Column(type="string")
+     * 
      */
     private $password;
 
@@ -95,12 +102,12 @@ class Clients
         return $this;
     }
 
-    public function getTokenUpdate(): ?\DateTimeInterface
+    public function getTokenUpdate(): ?\DateTime
     {
         return $this->token_update;
     }
 
-    public function setTokenUpdate(\DateTimeInterface $token_update): self
+    public function setTokenUpdate(\DateTime $token_update): self
     {
         $this->token_update = $token_update;
 
