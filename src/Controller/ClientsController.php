@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Clients;
 use App\Repository\ClientsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ClientsController extends AbstractController
 {
@@ -41,15 +43,22 @@ class ClientsController extends AbstractController
     /**
      * @Route("/clients/{login}", name="clientsLogin")
      */
-    public function editActiveOfClient(Clients $client)
+    public function editActiveOfClient(Request $request)
     {
-        $editClient = $this-> clientRepository -> findOneBy(['login' => $client -> getLogin()]);
+        $clLogin = ($request -> attributes -> get('login'));
+        $editClient = $this -> getDoctrine() -> getRepository(Clients::class) -> findOneBy(['login' => $clLogin]);
 
-        if ($editClient -> getActive()){
-            $editClient -> setActive(false);
-            $em = $this -> getDoctrine() -> getManager();
-            $em->flush();
+        if ($editClient){
+            if ($editClient -> getActive()) {
+                $editClient->setActive(false);
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+            }
         }
+
+
+        //$editClient = $this-> clientRepository -> findOneBy(['login' => $client -> getLogin()]);
+
 
         return $this -> redirectToRoute('clients');
     }
