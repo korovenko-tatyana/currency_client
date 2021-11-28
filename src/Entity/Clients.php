@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ClientsRepository::class)
- * @UniqueEntity("login")
+ *  @UniqueEntity("login")
  */
 class Clients
 {

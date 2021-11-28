@@ -1,20 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ClientsController!{% endblock %}
+{% block title %}List of clients{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <p><strong>List of clients: press on name and deactivate one of them</strong></p>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Applications/MAMP/htdocs/currency_client/src/Controller/ClientsController.php'|file_link(0) }}">src/Controller/ClientsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Applications/MAMP/htdocs/currency_client/templates/clients/index.html.twig'|file_link(0) }}">templates/clients/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% for client in clients %}
+        {% if client.active %}
+            <p><a href={{ path('clientsLogin', {'login': client.login} ) }}>{{ client.login }} </a>  |  Active: {{ client.active }}</p>
+        {% else %}
+            <p>{{ client.login }} </a>  |  Active: 0  |  Client is not active!</p>
+        {% endif%}
+    {% endfor %}
 {% endblock %}
