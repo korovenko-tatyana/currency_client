@@ -6,7 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Clients;
-use App\Controller\Currency;
+
+use App\Entity\Currency;
 use App\Repository\ClientsRepository;
 use App\Repository\CurrencyRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -202,6 +203,4 @@ class ApiController extends AbstractController
         return new JsonResponse($convert_json);
 
     }
-
-
 }
