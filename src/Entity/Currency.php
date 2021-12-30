@@ -20,106 +20,106 @@ class Currency
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $ValuteID;
+    private $valuteID;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $NumCode;
+    private $numCode;
 
     /**
      * @ORM\Column(type="string", length=3)
      */
-    private $CharCode;
+    private $charCode;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Nominal;
+    private $nominal;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $Value;
+    private $value;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
     public function getValuteID(): ?string
     {
-        return $this->ValuteID;
+        return $this->valuteID;
     }
 
-    public function setValuteID(string $ValuteID): self
+    public function setValuteID($valuteID): self
     {
-        $this->ValuteID = $ValuteID;
+        $this->valuteID = $valuteID;
 
         return $this;
     }
 
     public function getNumCode(): ?int
     {
-        return $this->NumCode;
+        return $this->numCode;
     }
 
-    public function setNumCode(int $NumCode): self
+    public function setNumCode($numCode): self
     {
-        $this->NumCode = $NumCode;
+        $this->numCode = $numCode;
 
         return $this;
     }
 
     public function getCharCode(): ?string
     {
-        return $this->CharCode;
+        return $this->charCode;
     }
 
-    public function setCharCode(string $CharCode): self
+    public function setCharCode($charCode): self
     {
-        $this->CharCode = $CharCode;
+        $this->charCode = $charCode;
 
         return $this;
     }
 
     public function getNominal(): ?int
     {
-        return $this->Nominal;
+        return $this->nominal;
     }
 
-    public function setNominal(int $Nominal): self
+    public function setNominal($nominal): self
     {
-        $this->Nominal = $Nominal;
+        $this->nominal = $nominal;
 
         return $this;
     }
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName($name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getValue(): ?float
     {
-        return $this->Value;
+        return $this->value;
     }
 
-    public function setValue(float $Value): self
+    public function setValue($value): self
     {
-        $this->Value = $Value;
+        $this->value = $value;
 
         return $this;
     }

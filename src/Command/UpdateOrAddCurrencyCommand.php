@@ -8,7 +8,11 @@ use App\Repository\CurrencyRepository;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use MyBuilder\Bundle\CronosBundle\Annotation\Cron;
 
+/**
+ * @Cron(hour="9", minute="10", noLogs=true)
+ */
 class UpdateOrAddCurrencyCommand extends Command
 {
     private $em;
@@ -38,22 +42,22 @@ class UpdateOrAddCurrencyCommand extends Command
 
         foreach ($arrayFromJson['Valute'] as $value){
 
-            $currency = $this->em->getRepository(Currency::class)->findOneBy(['CharCode' => $value['CharCode']]);
+            $currency = $this->em->getRepository(Currency::class)->findOneBy(['charCode' => $value['CharCode']]);
 
             if ($currency){
                 $currencyValue = str_replace(',', ".", $value['Value']);
-                $currency -> setValue((float)$currencyValue);
+                $currency->setValue((float)$currencyValue);
                 $this->em->flush();
             } else {
                 $currency = new Currency();
-                $currency -> setValuteID($value['@attributes']['ID']);
-                $currency -> setNumCode($value['NumCode']);
-                $currency -> setCharCode($value['CharCode']);
-                $currency -> setNominal($value['Nominal']);
-                $currency -> setName($value['Name']);
+                $currency->setValuteID($value['@attributes']['ID']);
+                $currency->setNumCode($value['NumCode']);
+                $currency->setCharCode($value['CharCode']);
+                $currency->setNominal($value['Nominal']);
+                $currency->setName($value['Name']);
 
                 $currencyValue = str_replace(',', ".", $value['Value']);
-                $currency -> setValue((float)$currencyValue);
+                $currency->setValue((float)$currencyValue);
 
                 $this->em->persist($currency);
                 $this->em->flush();

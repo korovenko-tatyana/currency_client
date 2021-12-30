@@ -9,15 +9,21 @@ use \DateTime;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use MyBuilder\Bundle\CronosBundle\Annotation\Cron;
 
+/**
+ * @Cron(minute="/20", noLogs=true)
+ */
 class UpdateTokenCommand extends Command
 {
     private $em;
 
-    public function __construct(EntityManagerInterface $em) {
+    public function __construct(EntityManagerInterface $em)
+    {
         $this->em = $em;
         parent::__construct();
     }
+
     protected function configure(): void
     {
         $this
@@ -31,16 +37,16 @@ class UpdateTokenCommand extends Command
         $clients = $this->em->getRepository(Clients::class)->findAll();
 
         foreach ($clients as $editClient) {
-            if ($editClient -> getActive()) {
+            if ($editClient->getActive()) {
 
                 $date = new DateTime();
                 $token_update = $date;
-                $editClient -> setTokenUpdate($token_update);
+                $editClient->setTokenUpdate($token_update);
 
-                $hash_login = (string)($editClient -> getLogin());
-                $hash_salt = (string)($token_update -> format('Y-m-d H:i:s'));
+                $hash_login = (string)($editClient->getLogin());
+                $hash_salt = (string)($token_update->format('Y-m-d H:i:s'));
                 $hash = $hash_login . $hash_salt;
-                $editClient -> setToken(hash('ripemd160', $hash));
+                $editClient->setToken(hash('ripemd160', $hash));
 
                 $this->em->flush();
             }

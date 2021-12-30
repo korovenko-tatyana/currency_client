@@ -25,7 +25,7 @@ class ClientsController extends AbstractController
      */
     public function clients()
     {
-        $clients = $this-> clientRepository -> findAll();
+        $clients = $this->clientRepository->findAll();
 
         return $this->render('clients/index.html.twig', [
             'clients' => $clients
@@ -37,18 +37,18 @@ class ClientsController extends AbstractController
      */
     public function editActiveOfClient(Request $request)
     {
-        $clLogin = ($request -> attributes -> get('login'));
+        $clLogin = ($request->attributes->get('login'));
 
-        $editClient = $this -> getDoctrine() -> getRepository(Clients::class) -> findOneBy(['login' => $clLogin]);
+        $editClient = $this->getDoctrine()->getRepository(Clients::class)->findOneBy(['login' => $clLogin]);
 
         if ($editClient){
-            if ($editClient -> getActive()) {
+            if ($editClient->getActive()) {
                 $editClient->setActive(false);
                 $em = $this->getDoctrine()->getManager();
                 $em->flush();
             }
         }
 
-        return $this -> redirectToRoute('clients');
+        return $this->redirectToRoute('clients');
     }
 }

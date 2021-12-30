@@ -14,9 +14,6 @@ class ClientsType extends AbstractType
         $builder
             ->add('login')
             ->add('password')
-//            ->add('active')
-//            ->add('token')
-//            ->add('token_update')
         ;
     }
 

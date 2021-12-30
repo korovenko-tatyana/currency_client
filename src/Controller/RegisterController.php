@@ -19,36 +19,38 @@ class RegisterController extends AbstractController
     public function index(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $client = new Clients();
-        $form = $this -> createForm(ClientsType::class, $client);
+        $form = $this->createForm(ClientsType::class, $client);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $password = password_hash($client -> getPassword(),PASSWORD_DEFAULT);
-            $client -> setPassword($password);
 
-            $client -> setActive(true);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = password_hash($client->getPassword(),PASSWORD_DEFAULT);
+            $client->setPassword($password);
+
+            $client->setActive(true);
 
             $date = new DateTime();
             $token_update = $date;
-            $client -> setTokenUpdate($token_update);
+            $client->setTokenUpdate($token_update);
 
-            $hash_login = (string)($client -> getLogin());
-            $hash_salt = (string)($token_update -> format('Y-m-d H:i:s'));
+            $hash_login = (string)($client->getLogin());
+            $hash_salt = (string)($token_update->format('Y-m-d H:i:s'));
             $hash = $hash_login . $hash_salt;
-            $client -> setToken(hash('ripemd160', $hash));
+            $client->setToken(hash('ripemd160', $hash));
 
-            $em = $this -> getDoctrine() -> getManager();
-            $em -> persist($client);
-            $em -> flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($client);
+            $em->flush();
 
             //add login of client to cookie
             $loginn = $request->request->get('clients')['login'];
             setcookie('login', $loginn, 0, '/');
 
-            return $this -> redirectToRoute('register');
+            return $this->redirectToRoute('register');
         }
 
         $loginFromCookie = $_COOKIE['login'] ?? '';
+        
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(), 'loginFromCookie' => $loginFromCookie
         ]);
